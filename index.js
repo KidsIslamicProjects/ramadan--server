@@ -6,7 +6,12 @@ const tasksRoutes = require("./routes/dailyRoutes.js");
 const app = express();
 const PORT = 3001;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://ramadan-challenge.vercel.app"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 mongoose
