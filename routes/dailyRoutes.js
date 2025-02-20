@@ -9,6 +9,6 @@ const router = express.Router();
 
 router.post("/task", createDaily);
 router.get("/tasks", getAllTasks);
-router.get("/user/:id", getTaskById);
+router.get("/task/:id", getTaskById);
 
 module.exports = router;
