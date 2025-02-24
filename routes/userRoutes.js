@@ -7,12 +7,14 @@ const {
   deleteUser,
   submitTask,
   loginUser,
+  submitDole,
 } = require("../controllers/userController.js");
 
 const router = express.Router();
 
 router.post("/users", createUser);
 router.post("/tasks/submit", submitTask);
+router.post("/tasks/dole", submitDole);
 router.post("/login", loginUser);
 router.get("/users", getUsers);
 router.get("/users/:id", getUserById);
