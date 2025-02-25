@@ -2,7 +2,7 @@ const User = require("../models/User");
 
 const submitDole = async (req, res) => {
   try {
-    const { userId, hijriDate, dole } = req.body;
+    const { userId, hijriDate } = req.body;
 
     const user = await User.findById(userId);
 
@@ -10,29 +10,23 @@ const submitDole = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Check if the hijriDate already exists in dailyProgress
-    let progressEntry = user.dailyProgress.find(
+    // Check if a record for today's hijriDate already exists
+    let progressEntry = user.dailyDoleProgress.find(
       (entry) => entry.hijriDate === hijriDate
     );
 
     if (progressEntry) {
-      // Update the existing entry
-      progressEntry.dole = dole;
       progressEntry.done = true;
     } else {
-      // Add a new entry
-      user.dailyProgress.push({
+      user.dailyDoleProgress.push({
         hijriDate,
-        dole,
         done: true,
       });
     }
 
     await user.save();
 
-    res
-      .status(200)
-      .json({ message: "Daily progress updated successfully", user });
+    res.status(200).json({ message: "Daily Dole updated successfully", user });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }

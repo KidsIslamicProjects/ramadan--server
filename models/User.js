@@ -7,15 +7,16 @@ const userSchema = new mongoose.Schema({
   gender: { type: String },
   phoneNumber: { type: String },
   evaluation: { type: String },
-  dailyProgress: [
+  dailyTasksProgress: [
     {
       hijriDate: { type: String },
       score: { type: Number, default: 0 },
       tafseerAnswer: { type: String },
     },
+  ],
+  dailyDoleProgress: [
     {
       hijriDate: { type: String },
-      dole: { type: String },
       done: { type: Boolean, default: false },
     },
   ],
