@@ -39,10 +39,10 @@ const submitTask = async (req, res) => {
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ error: "User not found" });
 
-    // Check if already submitted
-    const existingProgress = user.dailyProgress.find(
+    const existingProgress = user.dailyTasksProgress.find(
       (entry) => entry.hijriDate === hijriDate
     );
+
     if (existingProgress) {
       return res
         .status(400)
@@ -55,7 +55,7 @@ const submitTask = async (req, res) => {
     if (tafseerAnswer === "Completed") score += 2;
 
     // Save Progress
-    user.dailyProgress.push({ hijriDate, score, tafseerAnswer });
+    user.dailyTasksProgress.push({ hijriDate, score, tafseerAnswer });
     await user.save();
 
     res.json({ message: "Submission successful", score });
