@@ -6,12 +6,13 @@ const userSchema = new mongoose.Schema({
   age: { type: Number },
   gender: { type: String },
   phoneNumber: { type: String },
-  evaluation: { type: String },
+  evaluation: { type: String, default: "" },
   dailyTasksProgress: [
     {
       hijriDate: { type: String },
       score: { type: Number, default: 0 },
       tafseerAnswer: { type: String },
+      hadith: { type: String },
     },
   ],
   dailyDoleProgress: [
