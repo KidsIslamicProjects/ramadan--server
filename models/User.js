@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
       score: { type: Number, default: 0 },
       tafseerAnswer: { type: String },
       hadith: { type: String },
+      tasks: [String],
     },
   ],
   dailyDoleProgress: [
