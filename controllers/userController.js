@@ -33,7 +33,7 @@ const submitDole = async (req, res) => {
 };
 
 const submitTask = async (req, res) => {
-  const { userId, hijriDate, tasks, tafseerAnswer, hadithCompleted } = req.body;
+  const { userId, hijriDate, tasks, tafseerAnswer, hadith } = req.body;
 
   try {
     const user = await User.findById(userId);
@@ -51,11 +51,18 @@ const submitTask = async (req, res) => {
 
     // Calculate Score
     let score = tasks.length; // 1 point per task
-    if (hadithCompleted) score += 2;
+    if (hadith) score += 2;
     if (tafseerAnswer === "Completed") score += 2;
 
-    // Save Progress
-    user.dailyTasksProgress.push({ hijriDate, score, tafseerAnswer });
+    // Save Progress including tasks
+    user.dailyTasksProgress.push({
+      hijriDate,
+      score,
+      tafseerAnswer,
+      hadith: hadith,
+      tasks,
+    });
+
     await user.save();
 
     res.json({ message: "Submission successful", score });
