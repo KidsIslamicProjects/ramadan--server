@@ -54,6 +54,35 @@ const submitQuizAnswers = async (req, res) => {
       .json({ message: "An error occurred while submitting answers." });
   }
 };
+
+const getQuizAnswers = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is required." });
+    }
+
+    const quizAnswers = await QuizAnswer.find({ userId }).populate(
+      "userId",
+      "name"
+    );
+
+    if (!quizAnswers || quizAnswers.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No quiz answers found for this user." });
+    }
+
+    res.json(quizAnswers);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while fetching quiz answers." });
+  }
+};
+
 const checkIfQuizAlreadySubmitted = async (req, res) => {
   try {
     const { userId } = req.params; // Expecting userId to be passed as a URL parameter
@@ -91,4 +120,9 @@ const checkIfQuizAlreadySubmitted = async (req, res) => {
   }
 };
 
-module.exports = { submitQuizAnswers, checkIfQuizAlreadySubmitted };
+module.exports = {
+  submitQuizAnswers,
+  getQuizAnswers,
+  checkIfQuizAlreadySubmitted,
+};
+// Khodor
