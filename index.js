@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoutes.js");
 const tasksRoutes = require("./routes/dailyRoutes.js");
 const dolesRoutes = require("./routes/doleRoutes.js");
+const quizAnswerRoutes = require("./routes/quizAnswerRoutes.js");
+
 const app = express();
 const PORT = 3001;
 
@@ -25,7 +27,7 @@ mongoose
 app.use("/api", userRoutes);
 app.use("/api", tasksRoutes);
 app.use("/api", dolesRoutes);
-
+app.use("/api", quizAnswerRoutes);
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
