@@ -13,14 +13,12 @@ app.use(
   cors({
     origin: ["http://localhost:3000", "https://ramadan-challenge.vercel.app"],
     credentials: true,
-  })
+  }),
 );
 app.use(express.json());
 
 mongoose
-  .connect(
-    "mongodb+srv://ecommerce:ecommerce123@ecommerce.vmtpii4.mongodb.net/"
-  )
+  .connect("mongodb+srv://AlMu3in:Tahatata123@al-mu3in.x3zsopm.mongodb.net/")
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
 

@@ -6,6 +6,8 @@ const userSchema = new mongoose.Schema({
   age: { type: Number },
   gender: { type: String },
   phoneNumber: { type: String },
+  country: { type: String },
+  avatar: { type: String },
   evaluation: { type: String, default: "" },
   dailyTasksProgress: [
     {

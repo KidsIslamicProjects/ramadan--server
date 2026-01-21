@@ -12,7 +12,7 @@ const submitDole = async (req, res) => {
 
     // Check if a record for today's hijriDate already exists
     let progressEntry = user.dailyDoleProgress.find(
-      (entry) => entry.hijriDate === hijriDate
+      (entry) => entry.hijriDate === hijriDate,
     );
 
     if (progressEntry) {
@@ -40,7 +40,7 @@ const submitTask = async (req, res) => {
     if (!user) return res.status(404).json({ error: "User not found" });
 
     const existingProgress = user.dailyTasksProgress.find(
-      (entry) => entry.hijriDate === hijriDate
+      (entry) => entry.hijriDate === hijriDate,
     );
 
     if (existingProgress) {
