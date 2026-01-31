@@ -8,6 +8,7 @@ const {
   submitTask,
   loginUser,
   submitDole,
+  findStudentByShortId,
 } = require("../controllers/userController.js");
 
 const router = express.Router();
@@ -20,5 +21,5 @@ router.get("/users", getUsers);
 router.get("/users/:id", getUserById);
 router.put("/users/:id", updateUser);
 router.delete("/users/:id", deleteUser);
-
+router.get("/find-student/:shortId", findStudentByShortId);
 module.exports = router;

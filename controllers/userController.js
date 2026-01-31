@@ -153,6 +153,64 @@ const deleteUser = async (req, res) => {
   }
 };
 
+// controllers/userController.js
+
+// controllers/userController.js
+
+const findStudentByShortId = async (req, res) => {
+  try {
+    const { shortId } = req.params;
+
+    if (!shortId || shortId.length !== 6) {
+      return res.status(400).json({ error: "يجب إدخال 6 أرقام/حروف صحيحة" });
+    }
+
+    // We use aggregate to convert the ObjectId to a string before searching
+    const students = await User.aggregate([
+      {
+        $addFields: {
+          idString: { $toString: "$_id" }, // Convert _id to string
+        },
+      },
+      {
+        $match: {
+          idString: { $regex: shortId + "$", $options: "i" }, // Match the end
+        },
+      },
+      {
+        $project: {
+          name: 1,
+          _id: 1,
+          gender: 1,
+          avatar: 1,
+          groupName: 1,
+        },
+      },
+    ]);
+
+    const student = students[0]; // Take the first result
+
+    if (!student) {
+      return res
+        .status(404)
+        .json({ error: "عذراً، لم يتم العثور على طالب بهذا الرقم" });
+    }
+
+    const formattedStudent = {
+      shortId: student._id.toString().slice(-6),
+      fullId: student._id,
+      name: student.name,
+      avatar: student.avatar,
+      gender: student.gender,
+    };
+
+    res.status(200).json(formattedStudent);
+  } catch (error) {
+    console.error("Backend Error:", error); // This helps you see the real error in Vercel logs
+    res.status(500).json({ error: "حدث خطأ في الخادم أثناء البحث" });
+  }
+};
+
 module.exports = {
   deleteUser,
   submitTask,
@@ -162,4 +220,5 @@ module.exports = {
   getUserById,
   getUsers,
   loginUser,
+  findStudentByShortId,
 };
