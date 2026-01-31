@@ -78,6 +78,12 @@ const createUser = async (req, res) => {
     await user.save();
     res.status(201).json(user);
   } catch (error) {
+    // Check for Duplicate Name Error
+    if (error.code === 11000 && error.keyPattern.name) {
+      return res
+        .status(400)
+        .json({ error: "هذا الاسم مستخدم مسبقاً، الرجاء اختيار اسم آخر." });
+    }
     res.status(400).json({ error: error.message });
   }
 };

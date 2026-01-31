@@ -1,13 +1,17 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-  name: { type: String, unique: true },
+  name: { type: String, unique: true }, // Unique constraint
   password: { type: String },
-  age: { type: Number },
+  dob: { type: Date }, // Changed from 'age' to 'dob'
   gender: { type: String },
   phoneNumber: { type: String },
   country: { type: String },
   avatar: { type: String },
+  
+  role: { type: String, enum: ['student', 'supervisor'], default: 'student' },
+  groupName: { type: String },
+
   evaluation: { type: String, default: "" },
   dailyTasksProgress: [
     {
@@ -27,5 +31,4 @@ const userSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model("User", userSchema);
-
 module.exports = User;
